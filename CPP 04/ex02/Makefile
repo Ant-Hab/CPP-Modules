@@ -1,31 +1,26 @@
-NAME        := phonebook
+NAME        := abstract_animal
 
-# Compiler and Flags
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -std=c++98
 
-# Directories
 SRC_DIR     := src
 OBJ_DIR     := obj
 INC_DIR     := include
 
-# Source and Object Files
 SRCS        := main.cpp \
-               $(SRC_DIR)/Contact.cpp \
-               $(SRC_DIR)/PhoneBook.cpp
+               $(SRC_DIR)/AAnimal.cpp \
+               $(SRC_DIR)/Dog.cpp \
+               $(SRC_DIR)/Cat.cpp \
+               $(SRC_DIR)/Brain.cpp
 
 OBJS        := $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
-
-# Includes
 INC         := -I$(INC_DIR)
 
-# Colors
 GREEN       := \033[0;32m
 YELLOW      := \033[0;33m
 CYAN        := \033[0;36m
 RESET       := \033[0m
 
-# Rules
 all: $(NAME)
 
 $(NAME): $(OBJS)

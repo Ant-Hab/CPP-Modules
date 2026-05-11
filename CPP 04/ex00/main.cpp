@@ -1,41 +1,32 @@
-#include "PhoneBook.hpp"
+#include "Animal.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 
-/**
- * Entry point for the PhoneBook application.
- * Continuously prompts for ADD, SEARCH, or EXIT commands.
- */
-int main(void) 
-{
-    PhoneBook   phonebook;
-    std::string command;
+int main() {
+    std::cout << "--- Standard Polymorphism Test ---" << std::endl;
+    const Animal* meta = new Animal();
+    const Animal* j = new Dog();
+    const Animal* i = new Cat();
 
-    while (true) 
-    {
-        std::cout << "Enter command (ADD, SEARCH, EXIT): " << std::flush;
-        
-        if (!std::getline(std::cin, command)) 
-        {
-            std::cout << std::endl;
-            break;
-        }
+    std::cout << "Type: " << j->getType() << std::endl;
+    std::cout << "Type: " << i->getType() << std::endl;
 
-        if (command == "ADD") 
-        {
-            phonebook.addContact();
-        }
-        else if (command == "SEARCH") 
-        {
-            phonebook.searchContact();
-        }
-        else if (command == "EXIT") 
-        {
-            break;
-        }
-        else if (!command.empty()) 
-        {
-            std::cout << "Invalid command." << std::endl;
-        }
-    }
+    i->makeSound();
+    j->makeSound();
+    meta->makeSound();
 
-    return (0);
+    delete meta;
+    delete j;
+    delete i;
+
+    std::cout << "\n--- Wrong Animal Test (No Virtual) ---" << std::endl;
+    const WrongAnimal* wrong = new WrongCat();
+    std::cout << "Type: " << wrong->getType() << std::endl;
+    wrong->makeSound();
+
+    delete wrong;
+
+    return 0;
 }

@@ -1,4 +1,4 @@
-NAME        := phonebook
+NAME        := polymorphism
 
 # Compiler and Flags
 CXX         := c++
@@ -11,8 +11,11 @@ INC_DIR     := include
 
 # Source and Object Files
 SRCS        := main.cpp \
-               $(SRC_DIR)/Contact.cpp \
-               $(SRC_DIR)/PhoneBook.cpp
+               $(SRC_DIR)/Animal.cpp \
+               $(SRC_DIR)/Dog.cpp \
+               $(SRC_DIR)/Cat.cpp \
+               $(SRC_DIR)/WrongAnimal.cpp \
+               $(SRC_DIR)/WrongCat.cpp
 
 OBJS        := $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 

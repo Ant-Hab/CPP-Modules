@@ -1,41 +1,23 @@
-#include "PhoneBook.hpp"
+#include "AAnimal.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
 
-/**
- * Entry point for the PhoneBook application.
- * Continuously prompts for ADD, SEARCH, or EXIT commands.
- */
-int main(void) 
+/* Main entry point to test abstract class instantiation restrictions */
+int main()
 {
-    PhoneBook   phonebook;
-    std::string command;
+    // const AAnimal* meta = new AAnimal(); // This will fail to compile if uncommented
 
-    while (true) 
-    {
-        std::cout << "Enter command (ADD, SEARCH, EXIT): " << std::flush;
-        
-        if (!std::getline(std::cin, command)) 
-        {
-            std::cout << std::endl;
-            break;
-        }
+    const AAnimal* j = new Dog();
+    const AAnimal* i = new Cat();
 
-        if (command == "ADD") 
-        {
-            phonebook.addContact();
-        }
-        else if (command == "SEARCH") 
-        {
-            phonebook.searchContact();
-        }
-        else if (command == "EXIT") 
-        {
-            break;
-        }
-        else if (!command.empty()) 
-        {
-            std::cout << "Invalid command." << std::endl;
-        }
-    }
+    std::cout << j->getType() << " " << std::endl;
+    std::cout << i->getType() << " " << std::endl;
 
-    return (0);
+    i->makeSound();
+    j->makeSound();
+
+    delete j;
+    delete i;
+
+    return 0;
 }
