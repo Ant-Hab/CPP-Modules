@@ -1,41 +1,20 @@
-#include "PhoneBook.hpp"
+#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
-/**
- * Entry point for the PhoneBook application.
- * Continuously prompts for ADD, SEARCH, or EXIT commands.
- */
-int main(void) 
-{
-    PhoneBook   phonebook;
-    std::string command;
+int main() {
+    std::cout << "--- CONSTRUCTING FRAGTRAP ---" << std::endl;
+    FragTrap frag("Fragger");
 
-    while (true) 
-    {
-        std::cout << "Enter command (ADD, SEARCH, EXIT): " << std::flush;
-        
-        if (!std::getline(std::cin, command)) 
-        {
-            std::cout << std::endl;
-            break;
-        }
+    std::cout << "\n--- ACTIONS ---" << std::endl;
+    frag.attack("a group of Psycho Skags");
+    frag.takeDamage(40);
+    frag.beRepaired(20);
+    frag.highFivesGuys();
 
-        if (command == "ADD") 
-        {
-            phonebook.addContact();
-        }
-        else if (command == "SEARCH") 
-        {
-            phonebook.searchContact();
-        }
-        else if (command == "EXIT") 
-        {
-            break;
-        }
-        else if (!command.empty()) 
-        {
-            std::cout << "Invalid command." << std::endl;
-        }
-    }
+    std::cout << "\n--- TESTING CHAINING WITH SCAVTRAP ---" << std::endl;
+    ScavTrap scav("Scavvy");
+    scav.guardGate();
 
-    return (0);
+    std::cout << "\n--- DESTRUCTION ---" << std::endl;
+    return 0;
 }

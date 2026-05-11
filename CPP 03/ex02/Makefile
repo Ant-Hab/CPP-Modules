@@ -1,49 +1,47 @@
-NAME        := phonebook
+NAME        := fragtrap
 
-# Compiler and Flags
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -std=c++98
 
-# Directories
 SRC_DIR     := src
 OBJ_DIR     := obj
 INC_DIR     := include
 
-# Source and Object Files
 SRCS        := main.cpp \
-               $(SRC_DIR)/Contact.cpp \
-               $(SRC_DIR)/PhoneBook.cpp
+               $(SRC_DIR)/ClapTrap.cpp \
+               $(SRC_DIR)/ScavTrap.cpp \
+               $(SRC_DIR)/FragTrap.cpp
 
-OBJS        := $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
+OBJS        := $(OBJ_DIR)/main.o \
+               $(OBJ_DIR)/ClapTrap.o \
+               $(OBJ_DIR)/ScavTrap.o \
+               $(OBJ_DIR)/FragTrap.o
 
-# Includes
 INC         := -I$(INC_DIR)
 
-# Colors
 GREEN       := \033[0;32m
-YELLOW      := \033[0;33m
 CYAN        := \033[0;36m
 RESET       := \033[0m
 
-# Rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "$(CYAN)[Linking]$(RESET) $(NAME)"
-	@$(CXX) $(CXXFLAGS) $(INC) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)✔ $(NAME) built successfully!$(RESET)"
+	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)✔ Build successful!$(RESET)"
 
-$(OBJ_DIR)/%.o: %.cpp
-	@mkdir -p $(dir $@)
-	@echo "$(GREEN)[Compiling]$(RESET) $<"
+$(OBJ_DIR)/main.o: main.cpp
+	@mkdir -p $(OBJ_DIR)
+	@$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
 	@$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 clean:
-	@echo "$(YELLOW)[Cleaning]$(RESET) object files"
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@echo "$(YELLOW)[Removing]$(RESET) $(NAME)"
 	@rm -f $(NAME)
 
 re: fclean all

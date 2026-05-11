@@ -1,41 +1,16 @@
-#include "PhoneBook.hpp"
+#include "ScavTrap.hpp"
 
-/**
- * Entry point for the PhoneBook application.
- * Continuously prompts for ADD, SEARCH, or EXIT commands.
- */
-int main(void) 
+int main() 
 {
-    PhoneBook   phonebook;
-    std::string command;
+    std::cout << "--- CREATING SCAVTRAP ---" << std::endl;
+    ScavTrap serena("Serena");
 
-    while (true) 
-    {
-        std::cout << "Enter command (ADD, SEARCH, EXIT): " << std::flush;
-        
-        if (!std::getline(std::cin, command)) 
-        {
-            std::cout << std::endl;
-            break;
-        }
+    std::cout << "\n--- TESTING ACTIONS ---" << std::endl;
+    serena.attack("the gate");
+    serena.beRepaired(10);
+    serena.guardGate();
+    serena.takeDamage(50);
 
-        if (command == "ADD") 
-        {
-            phonebook.addContact();
-        }
-        else if (command == "SEARCH") 
-        {
-            phonebook.searchContact();
-        }
-        else if (command == "EXIT") 
-        {
-            break;
-        }
-        else if (!command.empty()) 
-        {
-            std::cout << "Invalid command." << std::endl;
-        }
-    }
-
-    return (0);
+    std::cout << "\n--- DESTRUCTORS ---" << std::endl;
+    return 0;
 }

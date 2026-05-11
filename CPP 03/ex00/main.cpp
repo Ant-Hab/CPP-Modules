@@ -1,41 +1,27 @@
-#include "PhoneBook.hpp"
+#include "ClapTrap.hpp"
 
-/**
- * Entry point for the PhoneBook application.
- * Continuously prompts for ADD, SEARCH, or EXIT commands.
- */
-int main(void) 
+int main() 
 {
-    PhoneBook   phonebook;
-    std::string command;
+    std::cout << "--- Initializing ---" << std::endl;
+    ClapTrap trappy("Trappy");
+    ClapTrap clippy("Clippy");
 
-    while (true) 
+    std::cout << "\n--- Action Tests ---" << std::endl;
+    trappy.attack("a wild bandit");
+    trappy.takeDamage(5);
+    trappy.beRepaired(3);
+
+    std::cout << "\n--- Energy Depletion Test ---" << std::endl;
+
+    for (int i = 0; i < 10; i++) 
     {
-        std::cout << "Enter command (ADD, SEARCH, EXIT): " << std::flush;
-        
-        if (!std::getline(std::cin, command)) 
-        {
-            std::cout << std::endl;
-            break;
-        }
-
-        if (command == "ADD") 
-        {
-            phonebook.addContact();
-        }
-        else if (command == "SEARCH") 
-        {
-            phonebook.searchContact();
-        }
-        else if (command == "EXIT") 
-        {
-            break;
-        }
-        else if (!command.empty()) 
-        {
-            std::cout << "Invalid command." << std::endl;
-        }
+        trappy.attack("the air");
     }
 
-    return (0);
+    std::cout << "\n--- Death Test ---" << std::endl;
+    clippy.takeDamage(20);
+    clippy.beRepaired(5); // Should fail
+
+    std::cout << "\n--- Destructors ---" << std::endl;
+    return 0;
 }

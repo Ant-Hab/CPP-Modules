@@ -1,4 +1,4 @@
-NAME        := phonebook
+NAME        := scavtrap
 
 # Compiler and Flags
 CXX         := c++
@@ -11,17 +11,19 @@ INC_DIR     := include
 
 # Source and Object Files
 SRCS        := main.cpp \
-               $(SRC_DIR)/Contact.cpp \
-               $(SRC_DIR)/PhoneBook.cpp
+               $(SRC_DIR)/ClapTrap.cpp \
+               $(SRC_DIR)/ScavTrap.cpp
 
-OBJS        := $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
+# This complex OBJS logic handles both root and src files correctly
+OBJS        := $(OBJ_DIR)/main.o \
+               $(OBJ_DIR)/ClapTrap.o \
+               $(OBJ_DIR)/ScavTrap.o
 
 # Includes
 INC         := -I$(INC_DIR)
 
 # Colors
 GREEN       := \033[0;32m
-YELLOW      := \033[0;33m
 CYAN        := \033[0;36m
 RESET       := \033[0m
 
@@ -30,21 +32,28 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "$(CYAN)[Linking]$(RESET) $(NAME)"
-	@$(CXX) $(CXXFLAGS) $(INC) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)✔ $(NAME) built successfully!$(RESET)"
+	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)✔ Build successful!$(RESET)"
 
-$(OBJ_DIR)/%.o: %.cpp
-	@mkdir -p $(dir $@)
+# Rule for main.cpp in root
+$(OBJ_DIR)/main.o: main.cpp
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(GREEN)[Compiling]$(RESET) $<"
+	@$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+
+# Rule for files in src/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
 	@echo "$(GREEN)[Compiling]$(RESET) $<"
 	@$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 clean:
-	@echo "$(YELLOW)[Cleaning]$(RESET) object files"
 	@rm -rf $(OBJ_DIR)
+	@echo "$(CYAN)Cleaned objects$(RESET)"
 
 fclean: clean
-	@echo "$(YELLOW)[Removing]$(RESET) $(NAME)"
 	@rm -f $(NAME)
+	@echo "$(CYAN)Removed executable$(RESET)"
 
 re: fclean all
 

@@ -1,50 +1,33 @@
-NAME        := phonebook
-
-# Compiler and Flags
+NAME        := claptrap
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -std=c++98
 
-# Directories
-SRC_DIR     := src
-OBJ_DIR     := obj
-INC_DIR     := include
-
-# Source and Object Files
-SRCS        := main.cpp \
-               $(SRC_DIR)/Contact.cpp \
-               $(SRC_DIR)/PhoneBook.cpp
-
-OBJS        := $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
-
-# Includes
-INC         := -I$(INC_DIR)
+SRCS        := main.cpp ClapTrap.cpp
+OBJS        := $(SRCS:.cpp=.o)
 
 # Colors
 GREEN       := \033[0;32m
-YELLOW      := \033[0;33m
 CYAN        := \033[0;36m
 RESET       := \033[0m
 
-# Rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@echo "$(CYAN)[Linking]$(RESET) $(NAME)"
-	@$(CXX) $(CXXFLAGS) $(INC) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)✔ $(NAME) built successfully!$(RESET)"
+	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)✔ Build successful$(RESET)"
 
-$(OBJ_DIR)/%.o: %.cpp
-	@mkdir -p $(dir $@)
+%.o: %.cpp
 	@echo "$(GREEN)[Compiling]$(RESET) $<"
-	@$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	@echo "$(YELLOW)[Cleaning]$(RESET) object files"
-	@rm -rf $(OBJ_DIR)
+	@rm -f $(OBJS)
+	@echo "$(CYAN)Cleaned objects$(RESET)"
 
 fclean: clean
-	@echo "$(YELLOW)[Removing]$(RESET) $(NAME)"
 	@rm -f $(NAME)
+	@echo "$(CYAN)Removed executable$(RESET)"
 
 re: fclean all
 
