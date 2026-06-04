@@ -1,16 +1,21 @@
 #include "Zombie.hpp"
 
-/* Initializes the zombie with a name */
-Zombie::Zombie(std::string name) : _name(name) {}
+/*
+ * Constructor: Initializes the zombie object with the provided name.
+ */
+Zombie::Zombie(std::string name): _name(name) {}
 
-/* Prints a destruction message to track the object's lifetime during execution */
-Zombie::~Zombie() 
-{
-    std::cout << _name << ": has been destroyed" << std::endl;
+/*
+ * Destructor: Prints a message to announce the zombie's destruction.
+ */
+Zombie::~Zombie(){
+    std::cout << _name << " was destroyed" << std::endl;
 }
 
-/* Outputs the zombie's name followed by the specific announcement string */
-void Zombie::announce(void) 
+/*
+ * Makes the zombie announce itself with its name and catchphrase.
+ */
+void Zombie::announce(void)
 {
     std::cout << _name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 }

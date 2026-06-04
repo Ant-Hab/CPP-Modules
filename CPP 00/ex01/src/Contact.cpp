@@ -1,25 +1,31 @@
 #include "Contact.hpp"
 
+/*
+ * Default constructor.
+ */
 Contact::Contact() {}
+
+/*
+ * Destructor.
+ */
 Contact::~Contact() {}
 
-/**
- * Updates all fields of a contact at once.
+/*
+ * Setters: Update the contact's details.
+ * These void functions assign the provided strings to their respective private member variables.
  */
-void Contact::setInfo(std::string f, std::string l, std::string n, std::string p, std::string s) 
-{
-    _firstName = f;
-    _lastName = l;
-    _nickname = n;
-    _phoneNumber = p;
-    _darkestSecret = s;
-}
+void Contact::setFirstName(const std::string& str) { _firstName = str; }
+void Contact::setLastName(const std::string& str) { _lastName = str; }
+void Contact::setNickname(const std::string& str) { _nickname = str; }
+void Contact::setNum(const std::string& str) { _num = str; }
+void Contact::setSecret(const std::string& str) { _secret = str; }
 
-/**
- * Getters to retrieve private member data.
+/*
+ * Getters: Retrieve the contact's details.
+ * These functions return the respective private member variables as std::strings.
  */
-std::string Contact::getFirstName() const     { return (_firstName); }
-std::string Contact::getLastName() const      { return (_lastName); }
-std::string Contact::getNickname() const      { return (_nickname); }
-std::string Contact::getPhoneNumber() const   { return (_phoneNumber); }
-std::string Contact::getDarkestSecret() const { return (_darkestSecret); }
+std::string Contact::getFirstName() const { return _firstName; }
+std::string Contact::getLastName() const { return _lastName; }
+std::string Contact::getNickname() const { return _nickname; }
+std::string Contact::getNum() const { return _num; }
+std::string Contact::getSecret() const { return _secret; }

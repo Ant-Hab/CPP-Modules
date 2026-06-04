@@ -2,6 +2,10 @@
 #include "HumanA.hpp"
 #include "HumanB.hpp"
 
+/*
+ * Tests the behavior of objects using references (HumanA) 
+ * versus objects using pointers (HumanB) for their attributes.
+ */
 int main()
 {
 	{
@@ -19,5 +23,6 @@ int main()
 		club.setType("some other type of club");
 		jim.attack();
 	}
+	
 	return 0;
 }

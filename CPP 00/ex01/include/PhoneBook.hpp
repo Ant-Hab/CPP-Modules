@@ -1,28 +1,21 @@
-#ifndef PHONEBOOK_HPP
-# define PHONEBOOK_HPP
+#ifndef ZOMBIE_HPP
+# define ZOMBIE_HPP
 
-# include "Contact.hpp"
-# include <iomanip>
+# include <iostream>
+# include <string>
 
-/**
- * Manages an array of 8 contacts.
- * Handles the logic for adding, searching, and formatting output.
- */
-class PhoneBook
-{
+class Zombie {
 private:
-    Contact _contacts[8];
-    int     _count;
-    int     _oldestIndex;
-
-    void    _formatColumn(std::string str) const;
+	std::string _name;
 
 public:
-    PhoneBook();
-    ~PhoneBook();
-
-    void    addContact();
-    void    searchContact();
+	Zombie(const std::string& name);
+	~Zombie();
+	
+	void announce(void) const;
 };
+
+Zombie* newZombie(const std::string& name);
+void    randomChump(const std::string& name);
 
 #endif

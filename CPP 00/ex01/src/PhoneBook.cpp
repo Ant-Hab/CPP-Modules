@@ -1,110 +1,141 @@
 #include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook() : _count(0), _oldestIndex(0) 
-{
-}
+/*
+ * Initializes the phonebook, setting the total contact count
+ * and the circular buffer index to 0.
+ */
+PhoneBook::PhoneBook() : _totalContacts(0), _nextIndex(0) {}
 
+/*
+ * Destructor.
+ */
 PhoneBook::~PhoneBook() {}
 
-/**
- * Prompts user for all contact information. 
- * Replaces the oldest contact if the phonebook is full (8 contacts).
+/*
+ * Prompts the user for input and loops until a non-empty, non-whitespace 
+ * string is provided. Handles EOF (Ctrl+D) gracefully.
  */
-void PhoneBook::addContact() 
+std::string PhoneBook::readRequiredField(const std::string& prompt)
 {
-    std::string fields[5];
-    std::string prompts[5] = {
-        "First Name: ", "Last Name: ", "Nickname: ", 
-        "Phone Number: ", "Darkest Secret: "
-    };
+	std::string input;
 
-    std::cout << "\n--- Adding New Contact ---" << std::endl;
-
-    for (int i = 0; i < 5; i++) 
-    {
-        while (fields[i].empty()) 
-        {
-            std::cout << prompts[i] << std::flush;
-            if (!std::getline(std::cin, fields[i])) 
-            {
-                return ;
-            }
-            if (fields[i].empty()) 
-            {
-                std::cout << "  (!) Field cannot be empty." << std::endl;
-            }
-        }
-    }
-
-    _contacts[_oldestIndex].setInfo(fields[0], fields[1], fields[2], fields[3], fields[4]);
-    
-    _oldestIndex = (_oldestIndex + 1) % 8;
-    if (_count < 8) 
-    {
-        _count++;
-    }
-
-    std::cout << "Done! Contact saved.\n" << std::endl;
+	while (true)
+	{
+		std::cout << prompt;
+		if (!std::getline(std::cin, input))
+			return "";
+		if (!input.empty() && input.find_first_not_of(" \t\n\r") != std::string::npos)
+			return input;
+		std::cout << "Field can't be empty." << std::endl;
+	}
 }
 
-/**
- * Handles formatting for the SEARCH table.
- * Right-aligns text to 10 characters and truncates with a '.' if longer.
+/*
+ * Collects contact information from the user and adds it to the phonebook.
+ * If the maximum of 8 contacts is reached, replaces the oldest contact.
  */
-void PhoneBook::_formatColumn(std::string str) const 
+void PhoneBook::addContact()
 {
-    if (str.length() > 10) 
-    {
-        std::cout << str.substr(0, 9) << ".";
-    }
-    else 
-    {
-        std::cout << std::setw(10) << std::right << str;
-    }
+	Contact addedContact;
+	std::string input;
+
+	input = readRequiredField("First name: ");
+	if (input.empty()) return;
+	addedContact.setFirstName(input);
+
+	input = readRequiredField("Last name: ");
+	if (input.empty()) return;
+	addedContact.setLastName(input);
+
+	input = readRequiredField("Nickname: ");
+	if (input.empty()) return;
+	addedContact.setNickname(input);
+
+	input = readRequiredField("Phone number: ");
+	if (input.empty()) return;
+	addedContact.setNum(input);
+
+	input = readRequiredField("Darkest secret: ");
+	if (input.empty()) return;
+	addedContact.setSecret(input);
+
+	_contacts[_nextIndex] = addedContact;
+	std::cout << "Contact successfully added at index " << _nextIndex << std::endl;
+	
+	if (_totalContacts < 8)
+	{
+		_totalContacts++;
+	}
+	
+	_nextIndex = (_nextIndex + 1) % 8;
 }
 
-/**
- * Displays a list of all saved contacts in a table.
- * Then prompts for an index to display full details of a specific contact.
+/*
+ * Formats a string to fit a 10-character column limit.
+ * Truncates and appends a dot ('.') if the string exceeds 10 characters.
  */
-void PhoneBook::searchContact() 
+std::string PhoneBook::formatTable(const std::string& str) const
 {
-    if (_count == 0) 
-    {
-        std::cout << "\nPhonebook is currently empty.\n" << std::endl;
-        return;
-    }
+	if (str.length() > 10)
+		return str.substr(0, 9) + ".";
+	else
+		return str;
+}
 
-    std::cout << "\n|     Index|First Name| Last Name|  Nickname|" << std::endl;
-    std::cout << "|----------|----------|----------|----------|" << std::endl;
+/*
+ * Displays a formatted table of all saved contacts.
+ * Prompts the user to enter an index to view a specific contact's full details.
+ */
+void PhoneBook::displayContact() const
+{
+	int index = 0;
+	if (_totalContacts == 0)
+	{
+		std::cout << "Phonebook is empty. Please add some contacts." << std::endl;
+		return;
+	}
+	
+	for (int i = 0; i < _totalContacts; i++)
+	{
+		std::cout << std::setw(10) << i << '|'
+				  << std::setw(10) << formatTable(_contacts[i].getFirstName()) << '|'
+				  << std::setw(10) << formatTable(_contacts[i].getLastName()) << '|'
+				  << std::setw(10) << formatTable(_contacts[i].getNickname())
+				  << std::endl;
+	}
+	
+	while (true)
+	{
+		std::cout << "Enter the index of the contact you want to see: ";
+		std::cin >> index;
+		
+		if (std::cin.eof()) 
+		{
+			std::cin.clear();
+			return;
+		} 
+		
+		if (std::cin.fail()) 
+		{
+			std::cout << "Invalid index. Enter a number." << std::endl;
+			std::cin.clear(); 
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+			continue;
+		}
+		
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+		
+		if (index < 0 || index >= _totalContacts)
+		{
+			std::cout << "Invalid index. Try again." << std::endl;
+			continue;
+		}
+		break;
+	}
 
-    for (int i = 0; i < _count; i++) 
-    {
-        std::cout << "|         " << i << "|";
-        _formatColumn(_contacts[i].getFirstName()); std::cout << "|";
-        _formatColumn(_contacts[i].getLastName());  std::cout << "|";
-        _formatColumn(_contacts[i].getNickname());  std::cout << "|" << std::endl;
-    }
-
-    std::string input;
-    std::cout << "\nEnter index to view details: " << std::flush;
-    if (!std::getline(std::cin, input)) 
-    {
-        return ;
-    }
-
-    if (input.length() == 1 && input[0] >= '0' && input[0] < '0' + _count) 
-    {
-        int idx = input[0] - '0';
-        std::cout << "\n[ Contact #" << idx << " ]" << std::endl;
-        std::cout << "First Name:     " << _contacts[idx].getFirstName() << std::endl;
-        std::cout << "Last Name:      " << _contacts[idx].getLastName() << std::endl;
-        std::cout << "Nickname:       " << _contacts[idx].getNickname() << std::endl;
-        std::cout << "Phone Number:   " << _contacts[idx].getPhoneNumber() << std::endl;
-        std::cout << "Darkest Secret: " << _contacts[idx].getDarkestSecret() << "\n" << std::endl;
-    } 
-    else 
-    {
-        std::cout << "Invalid index! Back to main menu.\n" << std::endl;
-    }
+	std::cout << "First name: " << _contacts[index].getFirstName() << std::endl;
+	std::cout << "Last name: " << _contacts[index].getLastName() << std::endl;
+	std::cout << "Nickname: " << _contacts[index].getNickname() << std::endl;
+	std::cout << "Phone number: " << _contacts[index].getNum() << std::endl;
+	std::cout << "Darkest secret: " << _contacts[index].getSecret() << std::endl;
 }

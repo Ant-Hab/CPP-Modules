@@ -1,11 +1,16 @@
 #include "Zombie.hpp"
 
-/* Tests heap vs stack allocation and ensures proper destruction */
-int main(void) 
+/*
+ * Main execution block. Tests heap vs stack allocation
+ * and ensures proper destruction of both zombies.
+ */
+int main ()
 {
-    Zombie* heapZombie = newZombie("HeapZombie");
+    Zombie* heapZombie = newZombie("Big zombie");
     heapZombie->announce();
-    delete heapZombie;
-    randomChump("StackZombie");
+    delete (heapZombie);
+    
+    randomChump("Mini zombie");
+    
     return 0;
 }

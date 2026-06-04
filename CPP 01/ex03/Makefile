@@ -5,17 +5,21 @@ CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -std=c++98
 
 # Directories
-INC_DIR     := .
+SRC_DIR     := src
+INC_DIR     := include
 OBJ_DIR     := obj
 
-# Source Files
+# Source Files (main is in root, others in src/)
 SRCS        := main.cpp \
-               Weapon.cpp \
-               HumanA.cpp \
-               HumanB.cpp
+               $(SRC_DIR)/Weapon.cpp \
+               $(SRC_DIR)/HumanA.cpp \
+               $(SRC_DIR)/HumanB.cpp
 
 # Object Files (Stored in obj/ directory)
 OBJS        := $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
+
+# Includes (-I tells the compiler where to look for .hpp files)
+INC         := -I$(INC_DIR)
 
 # Colors for pretty output
 GREEN       := \033[0;32m
@@ -34,7 +38,7 @@ $(NAME): $(OBJS)
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	@echo "$(GREEN)[Compiling]$(RESET) $<"
-	@$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 clean:
 	@echo "$(YELLOW)[Cleaning]$(RESET) object files"

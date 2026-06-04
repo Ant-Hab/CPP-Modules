@@ -1,12 +1,19 @@
 #include "HumanA.hpp"
 
-/* Constructor uses initialization list to bind the mandatory weapon reference */
-HumanA::HumanA(std::string name, Weapon& weapon) : _name(name), _weapon(weapon) {}
+/*
+ * Constructor: Initializes HumanA with a name and a required weapon reference.
+ */
+HumanA::HumanA(const std::string& name, Weapon& weapon) : _name(name), _weapon(weapon) {}
 
+/*
+ * Destructor.
+ */
 HumanA::~HumanA() {}
 
-/* Displays attack message using the current weapon type */
-void HumanA::attack() const 
+/*
+ * Outputs an attack message using the character's name and current weapon type.
+ */
+void HumanA::attack() const
 {
-    std::cout << _name << " attacks with their " << _weapon.getType() << std::endl;
+	std::cout << _name << " attacks with their " << _weapon.getType() << std::endl;
 }

@@ -1,41 +1,43 @@
 #include "PhoneBook.hpp"
 
-/**
- * Entry point for the PhoneBook application.
- * Continuously prompts for ADD, SEARCH, or EXIT commands.
+/*
+ * Main entry point for the PhoneBook program.
+ * Initializes the PhoneBook and runs a loop to accept user commands:
+ * ADD, SEARCH, or EXIT.
  */
-int main(void) 
+int main()
 {
-    PhoneBook   phonebook;
-    std::string command;
+	PhoneBook phoneBook;
+	std::string command;
 
-    while (true) 
-    {
-        std::cout << "Enter command (ADD, SEARCH, EXIT): " << std::flush;
-        
-        if (!std::getline(std::cin, command)) 
-        {
-            std::cout << std::endl;
-            break;
-        }
+	std::cout << "Welcome to the PhoneBook." << std::endl;
+	std::cout << "Available commands: ADD, SEARCH, EXIT" << std::endl;
 
-        if (command == "ADD") 
-        {
-            phonebook.addContact();
-        }
-        else if (command == "SEARCH") 
-        {
-            phonebook.searchContact();
-        }
-        else if (command == "EXIT") 
-        {
-            break;
-        }
-        else if (!command.empty()) 
-        {
-            std::cout << "Invalid command." << std::endl;
-        }
-    }
+	while (true)
+	{
+		std::cout << "> ";
+		if (!std::getline(std::cin, command))
+		{
+			break;
+		}
 
-    return (0);
+		if (command == "ADD")
+		{
+			phoneBook.addContact();
+		}
+		else if (command == "SEARCH")
+		{
+			phoneBook.displayContact();
+		}
+		else if (command == "EXIT")
+		{
+			break;
+		}
+		else if (!command.empty())
+		{
+			std::cout << "Invalid command. Use ADD, SEARCH, or EXIT." << std::endl;
+		}
+	}
+
+	return 0;
 }

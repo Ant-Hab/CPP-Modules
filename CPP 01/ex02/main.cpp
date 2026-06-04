@@ -2,7 +2,6 @@
 #include <string>
 
 /**
- * Exercise 02: HI THIS IS BRAIN
  * This program demonstrates that a variable, its pointer, and its reference
  * all point to the same location in memory.
  */
