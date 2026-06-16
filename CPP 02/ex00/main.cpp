@@ -5,6 +5,8 @@ int main(void)
 {
     Fixed a;
     Fixed b(a);
+    // Fixed b;
+    // b.setRawBits(5);
     Fixed c;
 
     c = b;

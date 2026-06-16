@@ -1,21 +1,27 @@
-#ifndef ZOMBIE_HPP
-# define ZOMBIE_HPP
+#ifndef PHONEBOOK_HPP
+# define PHONEBOOK_HPP
 
 # include <iostream>
 # include <string>
+# include <iomanip> // Required for std::setw
+# include <limits>  // Required for std::numeric_limits
+# include "Contact.hpp"
 
-class Zombie {
+class PhoneBook {
 private:
-	std::string _name;
+    Contact _contacts[8];
+    int     _totalContacts;
+    int     _nextIndex;
+
+    std::string readRequiredField(const std::string& prompt);
+    std::string formatTable(const std::string& str) const;
 
 public:
-	Zombie(const std::string& name);
-	~Zombie();
-	
-	void announce(void) const;
-};
+    PhoneBook();
+    ~PhoneBook();
 
-Zombie* newZombie(const std::string& name);
-void    randomChump(const std::string& name);
+    void addContact();
+    void displayContact() const;
+};
 
 #endif
