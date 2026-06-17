@@ -60,7 +60,7 @@ void Fixed::setRawBits(int const raw)
     this->_fixedPointValue = raw;
 }
 
-/* Global Operator Overload */
+/* Stream Overload */
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) 
 {
     os << fixed.toFloat();

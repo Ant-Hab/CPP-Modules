@@ -109,7 +109,6 @@ const Fixed& Fixed::max(const Fixed& a, const Fixed& b) {
 // --- Stream Overload ---
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
-    // Crucial: call toFloat() to prevent infinite recursion
     os << fixed.toFloat();
     return os;
 }
