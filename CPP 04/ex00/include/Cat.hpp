@@ -1,16 +1,13 @@
-#ifndef CAT_HPP
-# define CAT_HPP
+#pragma once
 
-# include "Animal.hpp"
+#include "Animal.hpp"
 
 class Cat : public Animal {
-public:
-    Cat();
-    virtual ~Cat();
-    Cat(const Cat& other);
-    Cat& operator=(const Cat& other);
+    public:
+        Cat();
+        Cat(const Cat& src);
+        Cat& operator=(const Cat& rhs);
+        ~Cat();
 
-    void makeSound() const;
+        void makeSound() const;
 };
-
-#endif

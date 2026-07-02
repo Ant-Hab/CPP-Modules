@@ -1,27 +1,41 @@
 #include "Dog.hpp"
 
+/*
+** Default Constructor: Sets type to Dog.
+*/
 Dog::Dog() {
+    std::cout << "Dog default constructor called\n";
     this->type = "Dog";
-    std::cout << "Dog constructor called" << std::endl;
 }
 
-Dog::~Dog() {
-    std::cout << "Dog destructor called" << std::endl;
+/*
+** Copy Constructor: Copies the state from another Dog object.
+*/
+Dog::Dog(const Dog& src) : Animal(src) {
+    std::cout << "Dog copy constructor called\n";
 }
 
-Dog::Dog(const Dog& other) : Animal(other) {
-    *this = other;
-    std::cout << "Dog copy constructor called" << std::endl;
-}
-
-Dog& Dog::operator=(const Dog& other) {
-    if (this != &other) {
-        this->type = other.type;
+/*
+** Assignment Operator: Safely handles copying data between already existing objects.
+*/
+Dog& Dog::operator=(const Dog& rhs) {
+    std::cout << "Dog assignment operator called\n";
+    if (this != &rhs) {
+        this->type = rhs.type;
     }
-    std::cout << "Dog assignment operator called" << std::endl;
     return *this;
 }
 
+/*
+** Destructor: Cleans up the Dog object.
+*/
+Dog::~Dog() {
+    std::cout << "Dog destructor called\n";
+}
+
+/*
+** makeSound implementation: Outputs the specific sound of the dog.
+*/
 void Dog::makeSound() const {
-    std::cout << "Woof! Woof!" << std::endl;
+    std::cout << "Woof! Woof!\n";
 }

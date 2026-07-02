@@ -1,21 +1,18 @@
-#ifndef ANIMAL_HPP
-# define ANIMAL_HPP
+#pragma once
 
-# include <iostream>
-# include <string>
+#include <iostream>
+#include <string>
 
 class Animal {
-protected:
-    std::string type;
+    protected:
+        std::string type{"Animal"};
 
-public:
-    Animal();
-    virtual ~Animal();
-    Animal(const Animal& other);
-    Animal& operator=(const Animal& other);
+    public:
+        Animal();
+        Animal(const Animal& src);
+        Animal& operator=(const Animal& rhs);
+        virtual ~Animal();
 
-    virtual void makeSound() const;
-    std::string getType() const;
+        std::string getType() const;
+        virtual void makeSound() const;
 };
-
-#endif

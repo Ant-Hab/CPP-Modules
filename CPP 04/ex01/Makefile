@@ -1,7 +1,7 @@
 NAME        := fire
 
 CXX         := c++
-CXXFLAGS    := -Wall -Wextra -Werror -std=c++98
+CXXFLAGS    := -Wall -Wextra -Werror -std=c++20
 
 SRC_DIR     := src
 OBJ_DIR     := obj
@@ -46,3 +46,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+.SECONDARY:

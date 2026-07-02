@@ -42,7 +42,6 @@ int main(void)
 
     /* 4. Static Min Function */
     std::cout << "Min between a and b: " << Fixed::min(a, b) << std::endl;
-    std::cout << "Max between a and b: " << Fixed::max(a, b) << std::endl;
 
     return 0;
 }

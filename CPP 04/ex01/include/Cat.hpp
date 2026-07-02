@@ -1,19 +1,17 @@
-#ifndef CAT_HPP
-# define CAT_HPP
+#pragma once
 
-# include "Animal.hpp"
-# include "Brain.hpp"
+#include "Animal.hpp"
+#include "Brain.hpp"
 
 class Cat : public Animal {
-private:
-    Brain* brain;
-public:
-    Cat();
-    virtual ~Cat();
-    Cat(const Cat& other);
-    Cat& operator=(const Cat& other);
-    void makeSound() const;
-    Brain* getBrain() const;
-};
+    private:
+        Brain* brain{nullptr};
 
-#endif
+    public:
+        Cat();
+        Cat(const Cat& src);
+        Cat& operator=(const Cat& rhs);
+        ~Cat();
+
+        void makeSound() const;
+};

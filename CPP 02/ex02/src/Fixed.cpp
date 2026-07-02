@@ -60,6 +60,31 @@ Fixed Fixed::operator-(const Fixed& other) const { return Fixed(this->toFloat() 
 Fixed Fixed::operator*(const Fixed& other) const { return Fixed(this->toFloat() * other.toFloat()); }
 Fixed Fixed::operator/(const Fixed& other) const { return Fixed(this->toFloat() / other.toFloat()); }
 
+// Fixed Fixed::operator+(const Fixed& other) const
+// {
+//     Fixed   result;
+//     result.setRawBits(this->_fixedPointValue + other.getRawBits());
+//     return result;
+// }
+// Fixed Fixed::operator-(const Fixed& other) const
+// {
+//     Fixed   result;
+//     result.setRawBits(this->_fixedPointValue - other.getRawBits());
+//     return result;
+// }
+// Fixed Fixed::operator*(const Fixed& other) const
+// {
+//     Fixed   result;
+//     result.setRawBits(this->_fixedPointValue * other.getRawBits() * (1 >> this->_fractionalBits));
+//     return result;
+// }
+// Fixed Fixed::operator/(const Fixed& other) const
+// {
+//     Fixed   result;
+//     result.setRawBits(this->_fixedPointValue * (1 << this->_fractionalBits) / other.getRawBits());
+//     return result;
+// }
+
 
 // --- Increment/Decrement Operators ---
 

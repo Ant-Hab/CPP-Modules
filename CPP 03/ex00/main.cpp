@@ -20,7 +20,7 @@ int main()
 
     std::cout << "\n--- Death Test ---" << std::endl;
     clippy.takeDamage(20);
-    clippy.beRepaired(5); // Should fail
+    clippy.beRepaired(5);
 
     std::cout << "\n--- Destructors ---" << std::endl;
     return 0;

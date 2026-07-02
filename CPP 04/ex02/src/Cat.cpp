@@ -1,30 +1,46 @@
 #include "Cat.hpp"
 
-/* Cat implementation inheriting from abstract AAnimal */
+/*
+** Default Constructor: Sets type to Cat and allocates a new Brain.
+*/
 Cat::Cat() {
+    std::cout << "Cat default constructor called\n";
     this->type = "Cat";
     this->brain = new Brain();
-    std::cout << "Cat created" << std::endl;
 }
 
-Cat::~Cat() {
-    delete this->brain;
-    std::cout << "Cat destroyed" << std::endl;
+/*
+** Copy Constructor: Allocates a completely NEW brain and copies the contents (Deep Copy).
+*/
+Cat::Cat(const Cat& src) : AAnimal(src) {
+    std::cout << "Cat copy constructor called\n";
+    this->brain = new Brain(*src.brain);
 }
 
-Cat::Cat(const Cat& other) : AAnimal(other) {
-    this->brain = NULL;
-    *this = other;
-}
-
-Cat& Cat::operator=(const Cat& other) {
-    if (this != &other) {
-        this->type = other.type;
-        if (this->brain) delete this->brain;
-        this->brain = new Brain(*other.brain);
+/*
+** Assignment Operator: Prevents memory leaks by freeing the old brain and allocating a new one with copied data.
+*/
+Cat& Cat::operator=(const Cat& rhs) {
+    std::cout << "Cat assignment operator called\n";
+    if (this != &rhs) {
+        this->type = rhs.type;
+        delete this->brain;
+        this->brain = new Brain(*rhs.brain);
     }
     return *this;
 }
 
-void Cat::makeSound() const { std::cout << "Meow!" << std::endl; }
-Brain* Cat::getBrain() const { return this->brain; }
+/*
+** Destructor: Frees the dynamically allocated Brain to prevent memory leaks.
+*/
+Cat::~Cat() {
+    std::cout << "Cat destructor called\n";
+    delete this->brain;
+}
+
+/*
+** makeSound implementation: Outputs the specific sound of the cat.
+*/
+void Cat::makeSound() const {
+    std::cout << "Meow! Meow!\n";
+}

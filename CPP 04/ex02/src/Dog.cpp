@@ -1,30 +1,46 @@
 #include "Dog.hpp"
 
-/* Dog implementation inheriting from abstract AAnimal */
+/*
+** Default Constructor: Sets type to Dog and allocates a new Brain.
+*/
 Dog::Dog() {
+    std::cout << "Dog default constructor called\n";
     this->type = "Dog";
     this->brain = new Brain();
-    std::cout << "Dog created" << std::endl;
 }
 
-Dog::~Dog() {
-    delete this->brain;
-    std::cout << "Dog destroyed" << std::endl;
+/*
+** Copy Constructor: Allocates a completely NEW brain and copies the contents (Deep Copy).
+*/
+Dog::Dog(const Dog& src) : AAnimal(src) {
+    std::cout << "Dog copy constructor called\n";
+    this->brain = new Brain(*src.brain);
 }
 
-Dog::Dog(const Dog& other) : AAnimal(other) {
-    this->brain = NULL;
-    *this = other;
-}
-
-Dog& Dog::operator=(const Dog& other) {
-    if (this != &other) {
-        this->type = other.type;
-        if (this->brain) delete this->brain;
-        this->brain = new Brain(*other.brain);
+/*
+** Assignment Operator: Prevents memory leaks by freeing the old brain and allocating a new one with copied data.
+*/
+Dog& Dog::operator=(const Dog& rhs) {
+    std::cout << "Dog assignment operator called\n";
+    if (this != &rhs) {
+        this->type = rhs.type;
+        delete this->brain;
+        this->brain = new Brain(*rhs.brain);
     }
     return *this;
 }
 
-void Dog::makeSound() const { std::cout << "Woof!" << std::endl; }
-Brain* Dog::getBrain() const { return this->brain; }
+/*
+** Destructor: Frees the dynamically allocated Brain to prevent memory leaks.
+*/
+Dog::~Dog() {
+    std::cout << "Dog destructor called\n";
+    delete this->brain;
+}
+
+/*
+** makeSound implementation: Outputs the specific sound of the dog.
+*/
+void Dog::makeSound() const {
+    std::cout << "Woof! Woof!\n";
+}

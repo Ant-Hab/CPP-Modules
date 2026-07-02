@@ -49,7 +49,7 @@ int Fixed::toInt(void) const
     return this->_fixedPointValue >> _fractionalBits;
 }
 
-/* Raw Bits Accessors */
+/* Returns and sets  the raw value of the fixed-point value */
 int Fixed::getRawBits(void) const 
 {
     return this->_fixedPointValue;

@@ -5,28 +5,39 @@
 #include "WrongCat.hpp"
 
 int main() {
-    std::cout << "--- Standard Polymorphism Test ---" << std::endl;
+    std::cout << "--- STANDARD ANIMAL TESTS ---\n";
     const Animal* meta = new Animal();
     const Animal* j = new Dog();
     const Animal* i = new Cat();
-
-    std::cout << "Type: " << j->getType() << std::endl;
-    std::cout << "Type: " << i->getType() << std::endl;
-
+    
+    std::cout << "\nTypes:\n";
+    std::cout << j->getType() << " " << "\n";
+    std::cout << i->getType() << " " << "\n";
+    
+    std::cout << "\nSounds:\n";
     i->makeSound();
     j->makeSound();
     meta->makeSound();
-
+    
+    std::cout << "\nCleaning up:\n";
     delete meta;
     delete j;
     delete i;
 
-    std::cout << "\n--- Wrong Animal Test (No Virtual) ---" << std::endl;
-    const WrongAnimal* wrong = new WrongCat();
-    std::cout << "Type: " << wrong->getType() << std::endl;
-    wrong->makeSound();
-
-    delete wrong;
+    std::cout << "\n--- WRONG ANIMAL TESTS ---\n";
+    const WrongAnimal* wrongMeta = new WrongAnimal();
+    const WrongAnimal* wrongI = new WrongCat();
+    
+    std::cout << "\nTypes:\n";
+    std::cout << wrongI->getType() << " " << "\n";
+    
+    std::cout << "\nSounds:\n";
+    wrongI->makeSound(); 
+    wrongMeta->makeSound();
+    
+    std::cout << "\nCleaning up:\n";
+    delete wrongMeta;
+    delete wrongI;
 
     return 0;
 }

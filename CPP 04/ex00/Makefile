@@ -2,7 +2,7 @@ NAME        := polymorphism
 
 # Compiler and Flags
 CXX         := c++
-CXXFLAGS    := -Wall -Wextra -Werror -std=c++98
+CXXFLAGS    := -Wall -Wextra -Werror -std=c++20
 
 # Directories
 SRC_DIR     := src
@@ -52,3 +52,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+.SECONDARY:
